@@ -6,6 +6,9 @@ backend:
 media_folder: "images"
 public_folder: "/images"
 
+site_url: https://lucent-llama-45824e.netlify.app
+identity_url: https://lucent-llama-45824e.netlify.app/.netlify/identity
+
 collections:
   - name: "projects"
     label: "Projects"
