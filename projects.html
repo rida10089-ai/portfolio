@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects – Ahmed-Reda Salimi</title>
+    <meta name="description" content="Teaching projects and downloadable resources by Ahmed-Reda Salimi, organized by subject and grade level.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="projects.css">
+</head>
+<body>
+
+    <!-- ======== NAVIGATION ======== -->
+    <nav id="navbar">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">A. R. Salimi</a>
+            <button class="nav-toggle" id="nav-toggle" aria-label="Open navigation menu">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html#about" class="nav-link">About</a></li>
+                <li><a href="index.html#cv" class="nav-link">CV</a></li>
+                <li><a href="index.html#academic-projects" class="nav-link">Research</a></li>
+                <li><a href="index.html#student-work" class="nav-link">Student Work</a></li>
+                <li><a href="index.html#teacher-work" class="nav-link">Teacher Work</a></li>
+                <li><a href="index.html#publications" class="nav-link">Publications</a></li>
+                <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ======== PROJECTS HERO ======== -->
+    <section class="projects-hero">
+        <div class="container">
+            <a href="index.html#teacher-work" class="back-link" id="back-to-table">
+                <i class="fa-solid fa-arrow-left"></i> Back to Teacher Work
+            </a>
+            <div class="projects-hero-content">
+                <div class="projects-hero-icon" id="subject-icon-display">
+                    <i class="fa-solid fa-calculator"></i>
+                </div>
+                <div>
+                    <span class="projects-hero-tag" id="grade-label-display">Grade 1</span>
+                    <h1 class="projects-hero-title" id="subject-title-display">Mathematics</h1>
+                    <p class="projects-hero-subtitle">Downloadable teaching resources, lesson plans, and project files.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ======== PROJECTS CONTENT ======== -->
+    <section class="projects-content section">
+        <div class="container">
+
+            <!-- Upload / Add Section -->
+            <div class="projects-upload-area" id="upload-area">
+                <div class="upload-inner">
+                    <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+                    <h3>Add Your Project Files</h3>
+                    <p>Place your PDF files in the <code>projects/</code> folder organized by grade and subject to have them appear here automatically, or add them manually in the HTML.</p>
+                </div>
+            </div>
+
+            <!-- Project Files Grid -->
+            <div class="project-files-grid" id="project-files-grid">
+                <!-- Files are listed here. Example structure: -->
+                <!--
+                <div class="file-card">
+                    <div class="file-card-icon">
+                        <i class="fa-solid fa-file-pdf"></i>
+                    </div>
+                    <div class="file-card-info">
+                        <h4>Lesson Plan – Addition & Subtraction</h4>
+                        <p>A comprehensive lesson plan covering basic operations for Grade 1.</p>
+                        <span class="file-meta"><i class="fa-regular fa-calendar"></i> September 2025 · PDF · 2.3 MB</span>
+                    </div>
+                    <a href="projects/grade1/math/lesson-plan.pdf" download class="file-download-btn" title="Download">
+                        <i class="fa-solid fa-download"></i>
+                    </a>
+                </div>
+                -->
+            </div>
+
+            <!-- Empty State (shown when no files exist yet) -->
+            <div class="projects-empty-state" id="projects-empty-state">
+                <i class="fa-regular fa-folder-open"></i>
+                <h3>No Projects Yet</h3>
+                <p>There are no files uploaded for this grade and subject yet. Check back soon or explore other subjects!</p>
+                <a href="index.html#teacher-work" class="btn btn-outline">
+                    <i class="fa-solid fa-arrow-left"></i> Browse Other Subjects
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ======== FOOTER ======== -->
+    <footer id="contact">
+        <div class="footer-top">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-brand">
+                        <p class="footer-logo">Ahmed-Reda Salimi</p>
+                        <p class="footer-tagline">Educator · Researcher · Author<br>Casablanca, Morocco</p>
+                    </div>
+                    <div class="footer-contact">
+                        <h3>Get In Touch</h3>
+                        <a href="mailto:rida10089@gmail.com" id="footer-email"><i class="fa-regular fa-envelope"></i> rida10089@gmail.com</a>
+                        <a href="tel:+212619071797" id="footer-phone"><i class="fa-solid fa-phone"></i> +212 619 071 797</a>
+                        <a href="https://linkedin.com/in/AHMED-REDA" target="_blank" rel="noopener" id="footer-linkedin"><i class="fa-brands fa-linkedin-in"></i> linkedin.com/in/AHMED-REDA</a>
+                    </div>
+                    <div class="footer-nav">
+                        <h3>Quick Links</h3>
+                        <a href="index.html#about">About</a>
+                        <a href="index.html#cv">CV</a>
+                        <a href="index.html#academic-projects">Research</a>
+                        <a href="index.html#teacher-work">Teacher Work</a>
+                        <a href="index.html#publications">Publications</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2026 Ahmed-Reda Salimi. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script src="js/projects.js"></script>
+</body>
+</html>

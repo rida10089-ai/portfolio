@@ -1,0 +1,252 @@
+{
+  "name": "Arabic Book Auto-Post (Daily)",
+  "flow": [
+    {
+      "id": 1,
+      "module": "notion:ActionSearchObjects",
+      "version": 2,
+      "parameters": {
+        "__IMTCONN__": null
+      },
+      "mapper": {
+        "object": "page",
+        "limit": "1",
+        "filter": {
+          "conditions": [
+            {
+              "o": "checkbox:equals",
+              "a": "Posted",
+              "b": false
+            }
+          ]
+        },
+        "sorts": [
+          {
+            "property": "Name",
+            "direction": "ascending"
+          }
+        ]
+      },
+      "metadata": {
+        "designer": {
+          "x": 0,
+          "y": 0,
+          "name": "Search Notion DB - Get First Unposted Paragraph"
+        },
+        "restore": {},
+        "expect": [
+          {
+            "name": "database_id",
+            "type": "text",
+            "label": "Database ID",
+            "required": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "module": "openai-gpt-3:createChatCompletion",
+      "version": 1,
+      "parameters": {
+        "__IMTCONN__": null
+      },
+      "mapper": {
+        "model": "gpt-4o",
+        "messages": [
+          {
+            "role": "system",
+            "content": "You are an expert social media manager AND image prompt engineer. You will receive an Arabic paragraph from a book. You must respond with EXACTLY two sections separated by '---SEPARATOR---':\n\nSECTION 1 (Arabic Caption): Write a short, engaging social media caption in Arabic for this paragraph. Include 5-8 relevant Arabic and English hashtags.\n\nSECTION 2 (Image Prompt): Write a detailed English image generation prompt for DALL-E 3. The aesthetic MUST be dark fantasy and horror-fantasy. Include details about lighting (dim, eerie), mood (ominous, mysterious), artistic style (digital painting, concept art), and specific visual elements inspired by the paragraph's themes."
+          },
+          {
+            "role": "user",
+            "content": "{{1.properties.`Paragraph Content`.rich_text[].plain_text}}"
+          }
+        ],
+        "max_tokens": "1000",
+        "temperature": "0.8"
+      },
+      "metadata": {
+        "designer": {
+          "x": 300,
+          "y": 0,
+          "name": "ChatGPT - Generate Caption + Image Prompt"
+        }
+      }
+    },
+    {
+      "id": 3,
+      "module": "util:TextParser",
+      "version": 2,
+      "parameters": {},
+      "mapper": {
+        "text": "{{2.choices[].message.content}}",
+        "pattern": "^([\\s\\S]*?)---SEPARATOR---([\\s\\S]*)$"
+      },
+      "metadata": {
+        "designer": {
+          "x": 600,
+          "y": 0,
+          "name": "Split Caption from Image Prompt"
+        },
+        "parameters": [
+          {
+            "name": "text",
+            "type": "text",
+            "label": "Text"
+          },
+          {
+            "name": "pattern",
+            "type": "text",
+            "label": "Pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "module": "openai-gpt-3:generateImage",
+      "version": 1,
+      "parameters": {
+        "__IMTCONN__": null
+      },
+      "mapper": {
+        "model": "dall-e-3",
+        "prompt": "{{3.$2}}",
+        "size": "1024x1024",
+        "quality": "standard",
+        "n": 1,
+        "response_format": "url"
+      },
+      "metadata": {
+        "designer": {
+          "x": 900,
+          "y": 0,
+          "name": "DALL-E 3 - Generate Dark Fantasy Image"
+        }
+      }
+    },
+    {
+      "id": 5,
+      "module": "http:ActionGetFile",
+      "version": 3,
+      "parameters": {},
+      "mapper": {
+        "url": "{{4.data[].url}}",
+        "method": "GET"
+      },
+      "metadata": {
+        "designer": {
+          "x": 1200,
+          "y": 0,
+          "name": "Download the Generated Image"
+        }
+      }
+    },
+    {
+      "id": 6,
+      "module": "facebook-pages:createAPost",
+      "version": 5,
+      "parameters": {
+        "__IMTCONN__": null
+      },
+      "mapper": {
+        "type": "photo",
+        "message": "{{3.$1}}",
+        "photo": "{{5.data}}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 1500,
+          "y": -100,
+          "name": "Post to Facebook Page (Image + Arabic Caption)"
+        },
+        "expect": [
+          {
+            "name": "page",
+            "type": "text",
+            "label": "Page",
+            "required": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 7,
+      "module": "instagram-for-business:createAPhotoPost",
+      "version": 2,
+      "parameters": {
+        "__IMTCONN__": null
+      },
+      "mapper": {
+        "imageUrl": "{{4.data[].url}}",
+        "caption": "{{3.$1}}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 1500,
+          "y": 100,
+          "name": "Post to Instagram (Image + Arabic Caption)"
+        },
+        "expect": [
+          {
+            "name": "account",
+            "type": "text",
+            "label": "Instagram Business Account",
+            "required": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 8,
+      "module": "notion:ActionUpdateADatabaseItem",
+      "version": 2,
+      "parameters": {
+        "__IMTCONN__": null
+      },
+      "mapper": {
+        "pageId": "{{1.id}}",
+        "properties": {
+          "Posted": {
+            "checkbox": true
+          }
+        }
+      },
+      "metadata": {
+        "designer": {
+          "x": 1800,
+          "y": 0,
+          "name": "Mark Paragraph as Posted in Notion"
+        },
+        "expect": [
+          {
+            "name": "database_id",
+            "type": "text",
+            "label": "Database ID",
+            "required": true
+          }
+        ]
+      }
+    }
+  ],
+  "metadata": {
+    "instant": false,
+    "version": 1,
+    "scenario": {
+      "roundtrips": 1,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "autoCommitTriggerLast": true,
+      "sequential": true
+    },
+    "designer": {
+      "orphans": []
+    },
+    "zone": "eu2.make.com"
+  },
+  "scheduling": {
+    "type": "indefinitely",
+    "interval": 1440
+  }
+}
